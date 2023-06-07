@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://wwr450.wsbeans.iseries/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/" name="WWR450" targetNamespace="http://wwr450.wsbeans.iseries/">
+  <types>
+<xs:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://wwr450.wsbeans.iseries/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://wwr450.wsbeans.iseries/" version="1.0">
+
+      
+  <xs:element name="entry" type="tns:entry"></xs:element>
+
+      
+  <xs:element name="entryResponse" type="tns:entryResponse"></xs:element>
+
+      
+  <xs:complexType name="entry">
+        
+    <xs:sequence>
+          
+      <xs:element name="arg0" type="tns:entryInput"></xs:element>
+        
+    </xs:sequence>
+      
+  </xs:complexType>
+
+      
+  <xs:complexType name="entryInput">
+        
+    <xs:sequence>
+          
+      <xs:element name="i_DEALERCODE" type="xs:string"></xs:element>
+          
+      <xs:element maxOccurs="unbounded" name="i_PARTLIST" type="tns:dspart"></xs:element>
+          
+      <xs:element name="i_RODATE" type="xs:decimal"></xs:element>
+        
+    </xs:sequence>
+      
+  </xs:complexType>
+
+      
+  <xs:complexType name="dspart">
+        
+    <xs:sequence>
+          
+      <xs:element name="PARTNO" type="xs:string"></xs:element>
+        
+    </xs:sequence>
+      
+  </xs:complexType>
+
+      
+  <xs:complexType name="entryResponse">
+        
+    <xs:sequence>
+          
+      <xs:element name="return" type="tns:entryResult"></xs:element>
+        
+    </xs:sequence>
+      
+  </xs:complexType>
+
+      
+  <xs:complexType name="entryResult">
+        
+    <xs:sequence>
+          
+      <xs:element name="o_PARTNUMROWS" type="xs:int"></xs:element>
+          
+      <xs:element maxOccurs="unbounded" name="o_PARTPRICE" type="tns:dspartprice"></xs:element>
+          
+      <xs:element name="o_WS_MESSAGE" type="xs:string"></xs:element>
+          
+      <xs:element name="o_WS_STATUS" type="xs:string"></xs:element>
+        
+    </xs:sequence>
+      
+  </xs:complexType>
+
+      
+  <xs:complexType name="dspartprice">
+        
+    <xs:sequence>
+          
+      <xs:element name="DESCRIPTION" type="xs:string"></xs:element>
+          
+      <xs:element name="MESSAGE" type="xs:string"></xs:element>
+          
+      <xs:element name="PARTNO" type="xs:string"></xs:element>
+          
+      <xs:element name="PRICE" type="xs:decimal"></xs:element>
+        
+    </xs:sequence>
+      
+  </xs:complexType>
+
+</xs:schema>
+  </types>
+  <message name="entryResponse">
+    <part element="tns:entryResponse" name="parameters">
+    </part>
+  </message>
+  <message name="entry">
+    <part element="tns:entry" name="parameters">
+    </part>
+  </message>
+  <portType name="WWR450Services">
+    <operation name="entry">
+      <input message="tns:entry" wsam:Action="http://wwr450.wsbeans.iseries/WWR450Services/entryRequest">
+    </input>
+      <output message="tns:entryResponse" wsam:Action="http://wwr450.wsbeans.iseries/WWR450Services/entryResponse">
+    </output>
+    </operation>
+  </portType>
+  <binding name="WWR450ServicesPortBinding" type="tns:WWR450Services">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+    <operation name="entry">
+      <soap:operation soapAction=""></soap:operation>
+      <input>
+        <soap:body use="literal"></soap:body>
+      </input>
+      <output>
+        <soap:body use="literal"></soap:body>
+      </output>
+    </operation>
+  </binding>
+  <service name="WWR450">
+    <port binding="tns:WWR450ServicesPortBinding" name="WWR450ServicesPort">
+      <soap:address location="http://209.203.79.46:10033/web/services/WWR450Service/WWR450"></soap:address>
+    </port>
+  </service>
+</definitions>
