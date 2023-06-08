@@ -30,8 +30,8 @@ public class ClaimAdjudicationRuleServiceImpl implements ClaimAdjudicationRuleSe
 			e.printStackTrace();
 			log.error("Exception occured " + e.getMessage());
 		}
-		return new Response(ApplicationConstants.IS_SUCCESS, "CMS", ApplicationConstants.FAILED,
-				ApplicationConstants.INTERNAL_ERROR_STATUS_CODE, ApplicationConstants.INTERNAL_ERROR_STATUS_MESSAGE,
+		return new Response(ApplicationConstants.IS_SUCCESS, "CMS", ApplicationConstants.SUCCESS,
+				ApplicationConstants.STATUS_STATUS_CODE, ApplicationConstants.SUCCESS_STATUS_MESSAGE,
 				partPriceresponse);
 
 	}
