@@ -28,6 +28,7 @@ public class ClaimAdjudicationRuleController {
 			@RequestParam(value = "dealerNumber") String dealerNumber, @RequestParam(value = "roDate") String roDate,
 			@RequestHeader HttpHeaders headers) {
 		log.info("request received!!");
+		System.out.println("request received for getPartPrice!!");
 		return new ResponseEntity<>(
 				claimAdjudicationRuleService.getHciPartPrice(partNumber, dealerNumber, roDate, headers), HttpStatus.OK);
 	}

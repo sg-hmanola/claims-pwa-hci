@@ -17,9 +17,11 @@ import claimspwahci.generated.Dspartprice;
 import claimspwahci.generated.Entry;
 import claimspwahci.generated.EntryInput;
 import claimspwahci.generated.ObjectFactory;
-
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 public class HCIClient extends WebServiceGatewaySupport {
 	public Dspartprice getPartPrice(List<String> partNumber, String dealerNumber, String roDate) {
+		log.info("Inside HCIClient");
 		Entry getEntry = new Entry();
 
 		EntryInput entryInput = new EntryInput();
@@ -32,6 +34,7 @@ public class HCIClient extends WebServiceGatewaySupport {
 
 		getEntry.setArg0(entryInput);
 		System.out.println("Request::" + getEntry.toString());
+		
 
 //		return (Dspartprice) getWebServiceTemplate().marshalSendAndReceive(getEntry);
 		JAXBElement<Entry> jAXBElement = new ObjectFactory().createEntry(getEntry);
