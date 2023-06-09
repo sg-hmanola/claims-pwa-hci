@@ -24,7 +24,7 @@ public class ClaimAdjudicationRuleServiceImpl implements ClaimAdjudicationRuleSe
 
 	@Override
 	public Response getHciPartPrice(List<String> partNumber, String dealerNumber, String roDate, HttpHeaders headers) {
-		Dspartprice partPriceresponse = null;
+		Object partPriceresponse = null;
                 String sStackTrace = null;
 		try {
 			partPriceresponse = hCIClient.getPartPrice(partNumber, dealerNumber, roDate);

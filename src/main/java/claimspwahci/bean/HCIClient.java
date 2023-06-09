@@ -18,10 +18,12 @@ import claimspwahci.generated.Entry;
 import claimspwahci.generated.EntryInput;
 import claimspwahci.generated.ObjectFactory;
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 public class HCIClient extends WebServiceGatewaySupport {
-	public Dspartprice getPartPrice(List<String> partNumber, String dealerNumber, String roDate) {
+	public Object getPartPrice(List<String> partNumber, String dealerNumber, String roDate) {
 		log.info("Inside HCIClient");
+		ObjectFactory objectFactory = new ObjectFactory();
 		Entry getEntry = new Entry();
 
 		EntryInput entryInput = new EntryInput();
@@ -34,16 +36,19 @@ public class HCIClient extends WebServiceGatewaySupport {
 
 		getEntry.setArg0(entryInput);
 		System.out.println("Request::" + getEntry.toString());
-		
 
 //		return (Dspartprice) getWebServiceTemplate().marshalSendAndReceive(getEntry);
 		JAXBElement<Entry> jAXBElement = new ObjectFactory().createEntry(getEntry);
-		System.out.println("Response of jAXBElement :: "+jAXBElement);
-		//jaxbObjectToXML(getEntry);
-		Dspartprice response = (Dspartprice) getWebServiceTemplate().marshalSendAndReceive(
-				"http://209.203.79.46:10033/web/services/WWR450Service/WWR450", jAXBElement,
-				new SoapActionCallback("http://wwr450.wsbeans.iseries/"));
+		System.out.println("Response of jAXBElement :: " + jAXBElement);
+		// jaxbObjectToXML(getEntry);
+//		Dspartprice response = (Dspartprice) getWebServiceTemplate().marshalSendAndReceive(
+//				"http://209.203.79.46:10033/web/services/WWR450Service/WWR450", jAXBElement,
+//				new SoapActionCallback("http://wwr450.wsbeans.iseries/"));
 
+		JAXBElement res = (JAXBElement) getWebServiceTemplate().marshalSendAndReceive(
+				"http://209.203.79.46:10033/web/services/WWR450Service/WWR450", objectFactory.createEntry(getEntry));
+		Object response = res.getValue();
+		log.info("Response Object ::"+ response.toString());
 		return response;
 
 	}
