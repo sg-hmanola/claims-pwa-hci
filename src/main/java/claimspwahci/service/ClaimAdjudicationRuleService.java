@@ -1,11 +1,10 @@
 package claimspwahci.service;
 
-import java.util.List;
-
 import org.springframework.http.HttpHeaders;
 
+import claimspwahci.bean.HciRequest;
 import claimspwahci.bean.Response;
 
 public interface ClaimAdjudicationRuleService {
-	 public Response getHciPartPrice(List<String> partNumber,String dealerNumber,String roDate,HttpHeaders headers);
+	public Response getHciPartPrice(HciRequest hciRequest, HttpHeaders headers);
 }

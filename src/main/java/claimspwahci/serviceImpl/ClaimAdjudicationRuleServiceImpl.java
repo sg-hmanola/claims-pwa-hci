@@ -1,19 +1,18 @@
 package claimspwahci.serviceImpl;
 
-import java.util.List;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import claimspwahci.bean.ApplicationConstants;
 import claimspwahci.bean.HCIClient;
+import claimspwahci.bean.HciRequest;
 import claimspwahci.bean.Response;
-import claimspwahci.generated.Dspartprice;
 import claimspwahci.service.ClaimAdjudicationRuleService;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
@@ -23,11 +22,11 @@ public class ClaimAdjudicationRuleServiceImpl implements ClaimAdjudicationRuleSe
 	HCIClient hCIClient;
 
 	@Override
-	public Response getHciPartPrice(List<String> partNumber, String dealerNumber, String roDate, HttpHeaders headers) {
+	public Response getHciPartPrice(HciRequest hciRequest, HttpHeaders headers) {
 		Object partPriceresponse = null;
                 String sStackTrace = null;
 		try {
-			partPriceresponse = hCIClient.getPartPrice(partNumber, dealerNumber, roDate);
+			partPriceresponse = hCIClient.getPartPrice(hciRequest);
 			log.info("Response :: {}",partPriceresponse);
 		} catch (Exception e) {
 			//e.printStackTrace();

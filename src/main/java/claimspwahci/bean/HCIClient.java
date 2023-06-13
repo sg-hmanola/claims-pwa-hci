@@ -10,27 +10,27 @@ import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
-import org.springframework.ws.soap.client.core.SoapActionCallback;
 
 import claimspwahci.generated.Dspart;
-import claimspwahci.generated.Dspartprice;
 import claimspwahci.generated.Entry;
 import claimspwahci.generated.EntryInput;
+import claimspwahci.generated.EntryResponse;
 import claimspwahci.generated.ObjectFactory;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class HCIClient extends WebServiceGatewaySupport {
-	public Object getPartPrice(List<String> partNumber, String dealerNumber, String roDate) {
+	public Object getPartPrice(HciRequest hciRequest) {
 		log.info("Inside HCIClient");
 		ObjectFactory objectFactory = new ObjectFactory();
 		Entry getEntry = new Entry();
 
 		EntryInput entryInput = new EntryInput();
-		Dspart dspart = new Dspart();
-		dspart.setPARTNO(partNumber.get(0));
-		entryInput.setIDEALERCODE(dealerNumber);
-		entryInput.setIRODATE(new BigDecimal(roDate));
+//		Dspart dspart = new Dspart();
+//		dspart.setPARTNO(partNumber.get(0));
+		entryInput.setIDEALERCODE(null != hciRequest.getDealerNumber() ? hciRequest.getDealerNumber() : "");
+		entryInput.setIRODATE(new BigDecimal(null != hciRequest.getRoDate() ? hciRequest.getRoDate() : ""));
+		entryInput.getIPARTLIST().addAll(hciRequest.getPartNumber());
 
 		// entryInput.getIPARTLIST().add((Dspart) partNumber);
 
@@ -47,8 +47,11 @@ public class HCIClient extends WebServiceGatewaySupport {
 
 		JAXBElement res = (JAXBElement) getWebServiceTemplate().marshalSendAndReceive(
 				"http://209.203.79.46:10033/web/services/WWR450Service/WWR450", objectFactory.createEntry(getEntry));
-		Object response = res.getValue();
-		log.info("Response Object ::"+ response.toString());
+		// Object response = res.getValue();
+		EntryResponse response = (EntryResponse) res.getValue();
+		// log.info("Response Object ::"+ response.toString());
+		log.info("Response:: " + response);
+
 		return response;
 
 	}
